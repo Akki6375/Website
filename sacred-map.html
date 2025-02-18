@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacred Map - Shaktipeeth Tourism</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff7e6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .map-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #D9534F;
+            font-size: 2rem;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 10px;
+            border: 2px solid #D9534F;
+        }
+
+        .temple-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .temple-card {
+            background: #fff8e1;
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease-in-out;
+            text-align: center;
+        }
+
+        .temple-card:hover {
+            transform: scale(1.05);
+        }
+
+        .temple-card h3 {
+            color: #D9534F;
+            font-size: 1.4rem;
+        }
+
+        .temple-card p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 8px 15px;
+            background: #D9534F;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #C9302C;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 style="text-align: center; color: #D9534F;">Sacred Map of Shaktipeeths</h1>
+    </div>
+
+    <nav class="nav">
+        <div class="nav-links">
+            <a href="shaktipeeth-homepage.html">Home</a>
+            <a href="shaktipeeth-registration.html">Registration</a>
+            <a href="about-page.html">About Shaktipeeth</a>
+            <a href="donation-page.html">Donations</a>
+            <a href="book-tour.html">Book Tour</a>
+            <a href="map.html" class="active">Sacred Map</a>
+        </div>
+        <button class="btn">Login</button>
+    </nav>
+
+    <div class="map-container">
+        <h2>Interactive Map of Shaktipeeth Temples</h2>
+        <div id="map"></div>
+
+        <div class="temple-list">
+            <div class="temple-card">
+                <h3>Kamakhya Temple</h3>
+                <p>📍 Guwahati, Assam</p>
+                <p>🔱 Yoni of Sati</p>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="temple-card">
+                <h3>Kalighat Temple</h3>
+                <p>📍 Kolkata, West Bengal</p>
+                <p>🔱 Right Toe of Sati</p>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="temple-card">
+                <h3>Jwalamukhi Temple</h3>
+                <p>📍 Himachal Pradesh</p>
+                <p>🔱 Tongue of Sati</p>
+                <a href="#" class="btn">View Details</a>
+            </div>
+
+            <div class="temple-card">
+                <h3>Dakshineswar Temple</h3>
+                <p>📍 Kolkata, West Bengal</p>
+                <p>🔱 Associated with Sri Ramakrishna</p>
+                <a href="#" class="btn">View Details</a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 1rem; background: #D9534F; color: white;">
+        <p>© 2025 Shaktipeeth Tourism. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function initMap() {
+            var mapCenter = { lat: 22.5726, lng: 88.3639 }; 
+
+            var map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 5,
+                center: mapCenter,
+                mapTypeId: "roadmap"
+            });
+
+            var temples = [
+                { name: "Kamakhya Temple", lat: 26.1674, lng: 91.7067 },
+                { name: "Kalighat Temple", lat: 22.5235, lng: 88.3467 },
+                { name: "Jwalamukhi Temple", lat: 31.8753, lng: 76.3174 },
+                { name: "Dakshineswar Temple", lat: 22.6548, lng: 88.3574 }
+            ];
+
+            temples.forEach(function (temple) {
+                var marker = new google.maps.Marker({
+                    position: { lat: temple.lat, lng: temple.lng },
+                    map: map,
+                    title: temple.name,
+                });
+
+                var infoWindow = new google.maps.InfoWindow({
+                    content: `<h3>${temple.name}</h3><p>📍 Latitude: ${temple.lat}, Longitude: ${temple.lng}</p>`,
+                });
+
+                marker.addListener("click", function () {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
+</body>
+</html>
