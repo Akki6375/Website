@@ -80,6 +80,40 @@
         .btn:hover {
             background: #C9302C;
         }
+
+        /* Navigation Bar */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #D9534F;
+            padding: 1rem 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover, .nav-links .active {
+            text-decoration: underline;
+        }
+
+        .nav .login-btn {
+            background: white;
+            color: #D9534F;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav .login-btn:hover {
+            background: #C9302C;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +130,7 @@
             <a href="book-tour.html">Book Tour</a>
             <a href="map.html" class="active">Sacred Map</a>
         </div>
-        <button class="btn">Login</button>
+        <a href="login.html" class="login-btn">Login</a>
     </nav>
 
     <div class="map-container">
@@ -140,30 +174,57 @@
 
     <script>
         function initMap() {
-            var mapCenter = { lat: 22.5726, lng: 88.3639 }; 
+            var mapCenter = { lat: 22.5726, lng: 88.3639 };
 
             var map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 5,
                 center: mapCenter,
-                mapTypeId: "roadmap"
+                mapTypeId: "roadmap",
+                mapTypeControl: true
             });
 
             var temples = [
-                { name: "Kamakhya Temple", lat: 26.1674, lng: 91.7067 },
-                { name: "Kalighat Temple", lat: 22.5235, lng: 88.3467 },
-                { name: "Jwalamukhi Temple", lat: 31.8753, lng: 76.3174 },
-                { name: "Dakshineswar Temple", lat: 22.6548, lng: 88.3574 }
+            { name: "Kamakhya", lat: 26.167, lng: 91.706, description: "Located in Assam, Kamakhya is one of the most revered Shakti Peeths." },
+        { name: "Kalka", lat: 30.836, lng: 76.938, description: "Located in Haryana, dedicated to Goddess Kali." },
+        { name: "Vaishno Devi", lat: 33.030, lng: 74.949, description: "Famous pilgrimage site in Jammu and Kashmir." },
+        { name: "Jwala Ji", lat: 31.880, lng: 76.317, description: "Flame temple located in Himachal Pradesh." },
+        { name: "Tarapith", lat: 24.107, lng: 87.797, description: "Located in West Bengal, associated with Tantric practices." },
+        { name: "Kalighat", lat: 22.523, lng: 88.345, description: "One of the main temples in Kolkata." },
+        { name: "Hinglaj", lat: 25.380, lng: 63.790, description: "Located in Pakistan, an important Shakti Peeth." },
+        { name: "Mahalaxmi", lat: 16.704, lng: 74.243, description: "Located in Kolhapur, Maharashtra." },
+        { name: "Shondesh", lat: 23.182, lng: 88.267, description: "Historic temple in Bengal." },
+        { name: "Kankalitala", lat: 23.661, lng: 87.694, description: "Sacred site in Birbhum, West Bengal." },
+        { name: "Bahula", lat: 23.533, lng: 87.160, description: "Shakti Peeth in West Bengal." },
+        { name: "Attahas", lat: 23.260, lng: 87.830, description: "Located in Bengal, part of the 51 Shakti Peeths." },
+        { name: "Nandikeshwari", lat: 24.180, lng: 87.930, description: "Shakti Peeth in Sainthia, West Bengal." },
+        { name: "Kanyakumari", lat: 8.088, lng: 77.538, description: "Located at the southern tip of India." },
+        { name: "Patan Devi", lat: 25.609, lng: 85.162, description: "Located in Bihar, one of the oldest temples." },
+        { name: "Vibhasha", lat: 21.788, lng: 87.888, description: "Located in West Bengal." },
+        { name: "Gandaki", lat: 27.590, lng: 83.875, description: "Located in Nepal, near the Gandaki river." },
+        { name: "Manas", lat: 26.720, lng: 89.660, description: "Shakti Peeth near Bhutan border." },
+        { name: "Chintpurni", lat: 31.858, lng: 76.042, description: "Located in Himachal Pradesh." },
+        { name: "Bimala", lat: 19.813, lng: 85.817, description: "Located inside Jagannath Puri temple." },
+        { name: "Shri Shail", lat: 16.078, lng: 78.869, description: "Located in Andhra Pradesh." },
+        { name: "Mithila", lat: 26.364, lng: 86.082, description: "Located in Nepal, near Janakpur." },
+        { name: "Tripura Sundari", lat: 23.836, lng: 91.280, description: "Located in Tripura." },
+        { name: "Janasthan", lat: 19.970, lng: 73.796, description: "Located in Maharashtra." },
+        { name: "Ujjaini", lat: 23.179, lng: 75.784, description: "Located in Ujjain, Madhya Pradesh." },
+        { name: "Sharada", lat: 34.790, lng: 74.097, description: "Located in Pakistan-occupied Kashmir." },
+        { name: "Ratnavali", lat: 22.929, lng: 88.431, description: "Located in Bengal." },
+        { name: "Chandrabhaga", lat: 18.981, lng: 84.617, description: "Located in Odisha." },
+        { name: "Gaya", lat: 24.791, lng: 85.000, description: "Located in Bihar." }
+                
             ];
 
             temples.forEach(function (temple) {
                 var marker = new google.maps.Marker({
                     position: { lat: temple.lat, lng: temple.lng },
                     map: map,
-                    title: temple.name,
+                    title: temple.name
                 });
 
                 var infoWindow = new google.maps.InfoWindow({
-                    content: `<h3>${temple.name}</h3><p>📍 Latitude: ${temple.lat}, Longitude: ${temple.lng}</p>`,
+                    content: `<h3>${temple.name}</h3><p>📍 Latitude: ${temple.lat}, Longitude: ${temple.lng}</p>`
                 });
 
                 marker.addListener("click", function () {
@@ -173,6 +234,6 @@
         }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCp11W7cD9HDMEijke7ToswhENC8OiYRlE&callback=initMap"></script>
 </body>
 </html>
