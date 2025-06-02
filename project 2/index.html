@@ -70,6 +70,18 @@
     .required {
       color: red;
     }
+
+    .error-message {
+      color: #ff0000;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .success-message {
+      color: #008000;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 <body>
@@ -78,7 +90,7 @@
   </div>
 
   <main>
-    <form class="registration-form">
+    <form class="registration-form" id="registrationForm">
       <div class="form-group">
         <label for="fullname">Full Name <span class="required">*</span></label>
         <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name as per government ID" autocomplete="name" />
@@ -120,29 +132,42 @@
         <input type="email" id="email" name="email" placeholder="Enter your email address" autocomplete="email" />
       </div>
 
+      <div id="message"></div>
       <button type="submit" class="submit-btn">Register</button>
     </form>
   </main>
 
   <script>
+    const form = document.getElementById('registrationForm');
+    const messageDiv = document.getElementById('message');
+
+    const showMessage = (message, isError = false) => {
+      messageDiv.className = isError ? 'error-message' : 'success-message';
+      messageDiv.textContent = message;
+      messageDiv.style.display = 'block';
+    };
+
     const handleSubmit = async (event) => {
       event.preventDefault();
+      messageDiv.style.display = 'none';
 
       try {
+        const formData = {
+          fullname: document.getElementById('fullname').value.trim(),
+          age: parseInt(document.getElementById('age').value),
+          address: document.getElementById('address').value.trim(),
+          idtype: document.getElementById('idtype').value,
+          idnumber: document.getElementById('idnumber').value.trim(),
+          mobile: document.getElementById('mobile').value.trim(),
+          email: document.getElementById('email').value.trim() || null
+        };
+
         const response = await fetch('http://localhost:3000/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            fullname: document.getElementById('fullname').value,
-            age: document.getElementById('age').value,
-            address: document.getElementById('address').value,
-            idtype: document.getElementById('idtype').value,
-            idnumber: document.getElementById('idnumber').value,
-            mobile: document.getElementById('mobile').value,
-            email: document.getElementById('email').value
-          })
+          body: JSON.stringify(formData)
         });
 
         const data = await response.json();
@@ -151,14 +176,14 @@
           throw new Error(data.error || 'Registration failed');
         }
 
-        alert('Registration successful!');
-        event.target.reset();
+        showMessage('Registration successful! Thank you for registering.');
+        form.reset();
       } catch (error) {
-        alert(error.message);
+        showMessage(error.message, true);
       }
-    }
+    };
 
-    document.querySelector('.registration-form').addEventListener('submit', handleSubmit);
+    form.addEventListener('submit', handleSubmit);
   </script>
 </body>
 </html>
