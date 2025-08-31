@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "build": "^0.1.4",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "vite": "^7.1.3"
   }
 }
